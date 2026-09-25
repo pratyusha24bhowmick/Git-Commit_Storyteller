@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git-Commit Storyteller</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">
+                    <span class="logo-icon">📖</span> Git-Commit Storyteller
+                </h1>
+                <p class="tagline">Watch your repository's history come alive</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Left Panel: Controls -->
+            <aside class="control-panel">
+                <div class="panel-section">
+                    <label for="repo-input" class="input-label">Repository</label>
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            id="repo-input"
+                            class="repo-input"
+                            placeholder="owner/repo or full URL"
+                            value="facebook/react"
+                        />
+                        <button id="fetch-btn" class="btn btn-primary">Fetch</button>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <p class="section-label">Demo Repos</p>
+                    <div class="demo-buttons">
+                        <button class="btn btn-demo" data-repo="octocat/Hello-World">Hello-World</button>
+                        <button class="btn btn-demo" data-repo="facebook/react">React</button>
+                        <button class="btn btn-demo" data-repo="torvalds/linux">Linux</button>
+                        <button class="btn btn-demo" data-repo="nodejs/node">Node.js</button>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-label">Total Commits</div>
+                            <div class="stat-value" id="total-commits">0</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Contributors</div>
+                            <div class="stat-value" id="total-contributors">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <button id="leaderboard-btn" class="btn btn-secondary">
+                        🏆 Leaderboard
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Center Canvas Area -->
+            <section class="canvas-section">
+                <div class="canvas-container">
+                    <canvas id="commit-canvas" class="commit-canvas"></canvas>
+                    <div class="canvas-overlay">
+                        <div id="loading-spinner" class="spinner hidden"></div>
+                        <div id="error-message" class="error-message hidden"></div>
+                    </div>
+                </div>
+
+                <!-- Story HUD -->
+                <div class="story-hud">
+                    <div class="story-content">
+                        <div class="story-title" id="story-title">Waiting for input...</div>
+                        <div class="story-text" id="story-text">Enter a repository to begin the journey</div>
+                        <div class="story-meta" id="story-meta"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Info -->
+            <aside class="info-panel">
+                <div class="panel-section">
+                    <p class="section-label">Current Commit</p>
+                    <div class="commit-info">
+                        <div class="commit-hash" id="commit-hash">—</div>
+                        <div class="commit-author" id="commit-author">—</div>
+                        <div class="commit-date" id="commit-date">—</div>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <p class="section-label">Top Contributors</p>
+                    <div class="contributors-mini" id="contributors-mini">
+                        <div class="empty-state">No data yet</div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Bottom Timeline Player -->
+        <footer class="timeline-player">
+            <div class="player-controls">
+                <button id="play-btn" class="btn-icon" title="Play/Pause">
+                    <span class="icon">▶</span>
+                </button>
+
+                <div class="timeline-scrubber">
+                    <input
+                        type="range"
+                        id="timeline-input"
+                        class="timeline-input"
+                        min="0"
+                        max="100"
+                        value="0"
+                    />
+                    <div class="timeline-progress" id="timeline-progress"></div>
+                </div>
+
+                <div class="time-display">
+                    <span id="current-time">0:00</span>
+                    <span>/</span>
+                    <span id="total-time">0:00</span>
+                </div>
+
+                <div class="speed-control">
+                    <span class="speed-label">Speed:</span>
+                    <button class="btn-speed active" data-speed="1">1x</button>
+                    <button class="btn-speed" data-speed="0.5">0.5x</button>
+                    <button class="btn-speed" data-speed="2">2x</button>
+                    <button class="btn-speed" data-speed="5">5x</button>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Leaderboard Drawer -->
+    <div id="leaderboard-drawer" class="drawer hidden">
+        <div class="drawer-header">
+            <h2>Contributor Leaderboard</h2>
+            <button id="close-leaderboard" class="btn-close">✕</button>
+        </div>
+        <div class="drawer-content">
+            <div id="leaderboard-list" class="leaderboard-list">
+                <div class="empty-state">Load a repository to see the leaderboard</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay (for drawer background) -->
+    <div id="drawer-overlay" class="drawer-overlay hidden"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
